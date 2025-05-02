@@ -1,25 +1,32 @@
 package com.github.forever178.integratedlisp.block;
+import com.github.forever178.integratedlisp.tileentity.TileDiskDriver;
+import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.inventory.Container;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
+import org.cyclops.cyclopscore.block.property.BlockProperty;
 import org.cyclops.cyclopscore.config.extendedconfig.BlockConfig;
 import org.cyclops.cyclopscore.config.extendedconfig.ExtendedConfig;
-import org.cyclops.cyclopscore.tileentity.CyclopsTileEntity;
 import org.cyclops.integrateddynamics.core.block.BlockContainerGuiCabled;
 
 import javax.annotation.Nonnull;
 
 public class BlockDiskDriver extends BlockContainerGuiCabled {
 
+    private static BlockDiskDriver _instance = null;
+
+    @BlockProperty
+    public static final PropertyDirection FACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
+
     /**
      * Make a new block instance.
      *
      * @param eConfig    Config for this block.
-     * @param tileEntity The part class
      */
-    public BlockDiskDriver(ExtendedConfig<BlockConfig> eConfig, Class<? extends CyclopsTileEntity> tileEntity) {
-        super(eConfig, tileEntity);
+    public BlockDiskDriver(ExtendedConfig<BlockConfig> eConfig) {
+        super(eConfig, TileDiskDriver.class);
     }
 
     /**
@@ -51,6 +58,10 @@ public class BlockDiskDriver extends BlockContainerGuiCabled {
     @Override
     public Class<? extends GuiScreen> getGui() {
         return null;
+    }
+
+    public static BlockDiskDriver getInstance() {
+        return _instance;
     }
 }
 
